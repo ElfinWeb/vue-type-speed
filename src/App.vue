@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <the-text-box>
+    <the-text-box :word="word">
       <the-score></the-score>
       <the-input></the-input>
     </the-text-box>
@@ -18,12 +18,30 @@ export default {
     TheScore,
     TheInput,
   },
+  data() {
+    return {
+      word: "",
+    };
+  },
+  computed: {},
+  methods: {
+    randomWord() {
+      fetch("https://random-word-api.herokuapp.com/word", {
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          this.word = response[0];
+        })
+        .catch((err) => console.error(err));
+    },
+  },
 };
 </script>
 
 <style>
 * {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 body {
